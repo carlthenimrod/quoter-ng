@@ -1,0 +1,67 @@
+<div class="container">
+  <h2 class="text-center pb-2">Request a Quote</h2>
+
+  <p class="text-center">Please give us your contact information and a detailed description of what you need.</p>
+
+  <p class="text-center">An administrator will get back to you as soon as possible.</p>
+
+  <form class="row justify-content-center" #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="col-6 p-4">
+        <div class="form-group">
+          <label for="email">Email:</label>
+      
+          <input 
+            type="email" 
+            name="email" 
+            id="email" 
+            class="form-control is-invalid" 
+            placeholder="name@example.com"
+            required
+            email
+            [(ngModel)]="quote.email"
+            #email="ngModel"
+            [ngClass]="{
+              'is-invalid': !email.valid && email.touched,
+              'is-valid': email.valid && email.touched
+            }"
+          >
+
+          <div class="invalid-feedback">
+            Email entered is invalid.
+          </div>
+        </div>
+    
+        <div class="form-group">
+          <label for="description">Description:</label>
+    
+          <textarea 
+            name="description" 
+            id="description" 
+            class="form-control" 
+            rows="5" 
+            placeholder="Tell us more..."
+            required
+            minlength="100"
+            [(ngModel)]="quote.description"
+            #description="ngModel"
+            [ngClass]="{
+              'is-invalid': !description.valid && description.touched,
+              'is-valid': description.valid && description.touched
+            }"
+          >
+          </textarea>
+          
+          <div class="invalid-feedback">
+            Description must be at least 100 characters.
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="btn btn-primary float-right"
+          [disabled]="!f.form.valid"
+        >
+        Send Request</button>
+    </div>
+  </form>
+</div>
