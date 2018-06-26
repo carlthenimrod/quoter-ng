@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 
-import { Quote } from './models/quote';
+import { Quote } from '@app/models/quote';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,16 @@ export class QuoteService {
 
   constructor(private http: HttpClient) { }
 
-  save(quote: Quote): Observable<any>{
+  add(quote: Quote): Observable<any>{
 
 		let api = this.api + 'quotes';
 
 		return this.http.post(api, quote);	
+  }
+
+  get(id: string): Observable<any>{
+    let api = this.api + `quotes/${id}`;
+
+    return this.http.get(api);
   }
 }

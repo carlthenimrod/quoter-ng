@@ -2,6 +2,7 @@ export class Quote {
   constructor(
     public email: string,
     public description: string,
-    public _id?: number
+    public _id?: string,
+    public __v?: number
   ) {}
 }
