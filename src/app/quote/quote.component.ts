@@ -21,7 +21,9 @@ export class QuoteComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.quoteService.get(params['id']).subscribe((quote: Quote) => {
-        console.log(quote);
+        this.quote = quote;
+      }, error => {
+        console.log(error);
       });
     });
   }

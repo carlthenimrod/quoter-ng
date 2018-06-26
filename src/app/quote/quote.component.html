@@ -1,3 +1,19 @@
-<p>
-  quote works!
-</p>
+<div class="container" *ngIf="quote">
+  <div class="row justify-content-center">
+    <div class="col-10">
+        <h1 class="display-4 text-center">Thank you for submitting a quote!</h1>
+
+        <p class="lead mb-4 text-center">An administrator will get back to you as soon as possible.</p>
+
+        <p><em>Here are your details:</em></p>
+
+        <p><strong>Email:</strong></p>
+
+        <p>{{ quote.email }}</p>
+
+        <p><strong>Description:</strong></p>
+
+        <p>{{ quote.description }}</p>
+    </div>
+  </div>
+</div>
