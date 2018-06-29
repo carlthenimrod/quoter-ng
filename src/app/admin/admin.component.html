@@ -1,3 +1,25 @@
-<p>
-  admin works!
-</p>
+<div class="container">
+  <div class="row">
+    <table class="table table-bordered table-dark">
+        <thead>
+          <tr>
+            <th>Email</th>
+          
+            <th>Description</th>
+
+            <th>Submitted</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <tr *ngFor="let quote of quotes">
+            <td>{{ quote.email }}</td>
+        
+            <td>{{ quote.description }}</td>
+
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
