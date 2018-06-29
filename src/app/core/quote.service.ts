@@ -14,16 +14,22 @@ export class QuoteService {
 
   constructor(private http: HttpClient) { }
 
-  add(quote: Quote): Observable<any>{
+  all(): Observable<any>{
+    let api = this.api + 'quotes';
 
-		let api = this.api + 'quotes';
-
-		return this.http.post(api, quote);	
+    return this.http.get(api);
   }
 
   get(id: string): Observable<any>{
     let api = this.api + `quotes/${id}`;
 
     return this.http.get(api);
+  }
+
+  add(quote: Quote): Observable<any>{
+
+		let api = this.api + 'quotes';
+
+		return this.http.post(api, quote);	
   }
 }

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { QuoteComponent } from './quote.component';
 import { QuoteRoutingModule } from '@app/quote/quote-routing.module';
+import { QuoteComponent } from './quote.component';
 
 @NgModule({
   imports: [
