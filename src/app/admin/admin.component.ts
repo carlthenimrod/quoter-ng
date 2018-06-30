@@ -6,7 +6,7 @@ import { Quote } from '@app/models/quote';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.sass']
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
 
