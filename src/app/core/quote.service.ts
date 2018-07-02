@@ -32,4 +32,10 @@ export class QuoteService {
 
 		return this.http.post(api, quote);	
   }
+
+  update(quote: Quote): Observable<any>{
+    let api = this.api + `quotes/${quote._id}`;
+
+    return this.http.put(api, quote);
+  }
 }

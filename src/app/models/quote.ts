@@ -14,7 +14,7 @@ export class Quote {
 export class Comment {
   constructor(
     public message: string,
-    public admin: boolean,
+    public admin?: boolean,
     public createdAt?: string,
     public updatedAt?: string,
     public _id?: string,
