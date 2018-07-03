@@ -40,4 +40,18 @@
         Submit Reply</button>
     </div>
   </form>
+
+  <div class="row justify-content-center">
+    <div class="col-10">
+      <blockquote 
+        class="blockquote p-4 my-4 rounded shadow-sm" 
+        *ngFor="let comment of quote.comments"
+        [ngClass]="{
+          'text-white bg-primary admin': comment.admin,
+          'text-dark bg-light': !comment.admin
+        }">
+        <p class="mb-0">{{ comment.message }}</p>
+      </blockquote>
+    </div>
+  </div>
 </div>

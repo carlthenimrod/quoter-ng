@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { QuoteService } from '@app/core/quote.service';
+import { CommentService } from '@app/core/comment.service';
 import { Quote, Comment } from '@app/models/quote';
 
 @Component({
@@ -16,7 +17,8 @@ export class AdminQuoteComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private quoteService: QuoteService
+    private quoteService: QuoteService,
+    private commentService: CommentService
   ) { }
 
   ngOnInit() {
@@ -35,12 +37,9 @@ export class AdminQuoteComponent implements OnInit {
 
   onSubmit() {
 
-    //add new comment to quote
-    this.quote.comments.push(this.comment);
-
-    //update quote
-    this.quoteService.update(this.quote).subscribe((quote: Quote) => {
-      console.log(this.quote);
+    //add comment
+    this.commentService.add(this.quote._id, this.comment).subscribe((quote: Quote) => {
+      this.quote = quote;
     },
     e => {
       console.log(e);
