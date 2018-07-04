@@ -1,57 +1,111 @@
-<div class="container" *ngIf="quote">
-  <div class="row justify-content-center">
-    <div class="col-10">
-        <h1 class="py-4">Quote Details:</h1>
-
-        <p><strong>From:</strong></p>
-
-        <p>{{ quote.email }}</p>
-
-        <p><strong>Description:</strong></p>
-
-        <p>{{ quote.description }}</p>
-    </div>
-  </div>
-
-  <form class="row justify-content-center" #f="ngForm" (ngSubmit)="onSubmit()">
-    <div class="col-10 p-4">
-        <div class="form-group">
-          <textarea 
-            name="reply" 
-            id="reply" 
-            class="form-control" 
-            rows="8" 
-            placeholder="Enter Reply..."
-            required
-            minlength="100"
-            [(ngModel)]="comment.message"
-          ></textarea>
-          
-          <div class="invalid-feedback">
-            Reply must be at least 100 characters.
-          </div>
+<section id="quote" *ngIf="quote">
+  <header class="bg-light border-bottom">
+    <div class="container">
+      <div class="row justify-content-center pb-4">
+        <div class="col-12">
+            <h1 class="mt-4">Quote Details</h1>
+    
+            <hr>
+    
+            <p><strong>From:</strong></p>
+    
+            <p>{{ quote.email }}</p>
+    
+            <p><strong>Description:</strong></p>
+    
+            <p>{{ quote.description }}</p>
         </div>
-
-        <button 
-          type="submit" 
-          class="btn btn-primary float-right"
-          [disabled]="!f.form.valid"
-        >
-        Submit Reply</button>
+      </div>
     </div>
-  </form>
+  </header>
 
-  <div class="row justify-content-center">
-    <div class="col-10">
-      <blockquote 
-        class="blockquote p-4 my-4 rounded shadow-sm" 
-        *ngFor="let comment of quote.comments"
-        [ngClass]="{
-          'text-white bg-primary admin': comment.admin,
-          'text-dark bg-light': !comment.admin
-        }">
-        <p class="mb-0">{{ comment.message }}</p>
-      </blockquote>
+  <div class="container">
+    <div id="latest" class="row justify-content-center py-4">
+        <div class="col-12">
+          <h3 *ngIf="latestAdminComment || latestUserComment">
+            Latest Messages
+          </h3>
+      
+          <hr>
+
+          <div *ngIf="latestComment === 'user'">
+              <p class="text-center">{{ latestUserComment.updatedAt | date:'short' }}</p>
+
+              <blockquote 
+                *ngIf="latestUserComment"
+                class="blockquote p-4 my-4 rounded shadow-sm text-dark bg-light"
+              >
+                <p class="mb-0">{{ latestUserComment.message }}</p>
+              </blockquote>
+          </div>
+
+          <div *ngIf="latestComment === 'admin'">
+            <p class="text-center">{{ latestAdminComment.updatedAt | date:'short' }}</p>
+
+            <blockquote 
+              *ngIf="latestAdminComment"
+              class="blockquote p-4 my-4 rounded shadow-sm text-white bg-primary admin"
+            >
+              <p class="mb-0">{{ latestAdminComment.message }}</p>
+            </blockquote>
+
+            <p class="text-center">{{ latestUserComment.updatedAt | date:'short' }}</p>
+
+            <blockquote 
+              *ngIf="latestUserComment"
+              class="blockquote p-4 my-4 rounded shadow-sm text-dark bg-light"
+            >
+              <p class="mb-0">{{ latestUserComment.message }}</p>
+            </blockquote>
+          </div>
+  
+          <form *ngIf="!latestAdminComment" #f="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <textarea 
+                name="reply" 
+                id="reply" 
+                class="form-control" 
+                rows="8" 
+                placeholder="Enter Reply..."
+                required
+                minlength="100"
+                [(ngModel)]="comment.message"
+              ></textarea>
+              
+              <div class="invalid-feedback">
+                Reply must be at least 100 characters.
+              </div>
+            </div>
+        
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-lg float-right"
+              [disabled]="!f.form.valid"
+            >
+            Submit Reply</button>
+          </form>
+        </div>
+    </div>
+  
+    <div id="history" class="row justify-content-center pb-4">
+      <div class="col-12">
+        <h3>Chat History</h3>
+  
+        <hr>
+  
+        <div *ngFor="let comment of quote.comments">
+          <p class="text-center">{{ comment.updatedAt | date:'short' }}</p>
+  
+          <blockquote 
+            class="blockquote p-4 my-4 rounded shadow-sm" 
+            [ngClass]="{
+              'text-white bg-primary admin': comment.admin,
+              'text-dark bg-light': !comment.admin
+            }">
+            <p class="mb-0">{{ comment.message }}</p>
+          </blockquote>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
