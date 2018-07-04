@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CoreModule } from '@app/core/core.module';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { CoreModule } from '@app/core/core.module';
+import { SharedModule } from '@app/shared/shared.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
 
@@ -14,7 +15,8 @@ import { AppRoutingModule } from '@app/app-routing.module';
     BrowserModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

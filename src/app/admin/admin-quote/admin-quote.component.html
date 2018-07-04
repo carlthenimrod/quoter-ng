@@ -29,34 +29,13 @@
           <hr>
 
           <div *ngIf="latestComment === 'user'">
-              <p class="text-center">{{ latestUserComment.updatedAt | date:'short' }}</p>
-
-              <blockquote 
-                *ngIf="latestUserComment"
-                class="blockquote p-4 my-4 rounded shadow-sm text-dark bg-light"
-              >
-                <p class="mb-0">{{ latestUserComment.message }}</p>
-              </blockquote>
+            <comment [comment]="latestUserComment" [me]="latestUserComment.admin"></comment>
           </div>
 
           <div *ngIf="latestComment === 'admin'">
-            <p class="text-center">{{ latestAdminComment.updatedAt | date:'short' }}</p>
+            <comment [comment]="latestAdminComment" [me]="latestAdminComment.admin"></comment>
 
-            <blockquote 
-              *ngIf="latestAdminComment"
-              class="blockquote p-4 my-4 rounded shadow-sm text-white bg-primary admin"
-            >
-              <p class="mb-0">{{ latestAdminComment.message }}</p>
-            </blockquote>
-
-            <p class="text-center">{{ latestUserComment.updatedAt | date:'short' }}</p>
-
-            <blockquote 
-              *ngIf="latestUserComment"
-              class="blockquote p-4 my-4 rounded shadow-sm text-dark bg-light"
-            >
-              <p class="mb-0">{{ latestUserComment.message }}</p>
-            </blockquote>
+            <comment [comment]="latestUserComment" [me]="latestUserComment.admin"></comment>
           </div>
   
           <form *ngIf="!latestAdminComment" #f="ngForm" (ngSubmit)="onSubmit()">
@@ -94,16 +73,7 @@
         <hr>
   
         <div *ngFor="let comment of quote.comments">
-          <p class="text-center">{{ comment.updatedAt | date:'short' }}</p>
-  
-          <blockquote 
-            class="blockquote p-4 my-4 rounded shadow-sm" 
-            [ngClass]="{
-              'text-white bg-primary admin': comment.admin,
-              'text-dark bg-light': !comment.admin
-            }">
-            <p class="mb-0">{{ comment.message }}</p>
-          </blockquote>
+          <comment [comment]="comment" [me]="comment.admin"></comment>
         </div>
       </div>
     </div>

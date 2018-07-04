@@ -1,0 +1,10 @@
+<p class="text-center">{{ comment.updatedAt | date:'short' }}</p>
+
+<blockquote 
+  class="blockquote p-4 my-4 rounded shadow-sm" 
+  [ngClass]="{
+    'text-white bg-primary admin': me,
+    'text-dark bg-light': !me
+  }">
+  <p class="mb-0">{{ comment.message }}</p>
+</blockquote>
