@@ -29,13 +29,27 @@
           <hr>
 
           <div *ngIf="latestComment === 'user'">
-            <comment [comment]="latestUserComment" [me]="latestUserComment.admin"></comment>
+            <comment 
+              [comment]="latestUserComment" 
+              [me]="latestUserComment.admin"
+            >
+            </comment>
           </div>
 
           <div *ngIf="latestComment === 'admin'">
-            <comment [comment]="latestAdminComment" [me]="latestAdminComment.admin"></comment>
+            <comment 
+              [comment]="latestAdminComment" 
+              [me]="latestAdminComment.admin"
+              [editable]="true"
+              [removable]="true"
+            >
+            </comment>
 
-            <comment [comment]="latestUserComment" [me]="latestUserComment.admin"></comment>
+            <comment 
+              [comment]="latestUserComment" 
+              [me]="latestUserComment.admin"
+            >
+            </comment>
           </div>
   
           <form *ngIf="!latestAdminComment" #f="ngForm" (ngSubmit)="onSubmit()">
@@ -66,14 +80,19 @@
         </div>
     </div>
   
-    <div id="history" class="row justify-content-center pb-4">
+    <div class="row justify-content-center pb-4">
       <div class="col-12">
         <h3>Chat History</h3>
   
         <hr>
   
         <div *ngFor="let comment of quote.comments">
-          <comment [comment]="comment" [me]="comment.admin"></comment>
+          <comment 
+            [comment]="comment" 
+            [me]="comment.admin" 
+            [size]="'sm'"
+          >
+          </comment>
         </div>
       </div>
     </div>
