@@ -1,6 +1,6 @@
 import { trigger, transition, style, animate, query, stagger } from "@angular/animations";
 
-export const commentPopTrigger = trigger('commentPop', [
+export const commentAddTrigger = trigger('commentAdd', [
   transition(':enter', [
     query('comment', [
       style({
@@ -15,21 +15,22 @@ export const commentPopTrigger = trigger('commentPop', [
         animate('200ms ease-out')
       ])
     ], { optional: true })
-  ]),
+  ])
+]);
+
+export const commentRemoveTrigger = trigger('commentRemove', [
   transition(':leave', [
-    query('comment', [
-      style({
-        height: '*',
-        opacity: 1,
-        transform: 'scale(1)'
-      }),
-      animate('200ms ease-in', style({
-        opacity: 0,
-        transform: 'scale(0)'
-      })),
-      animate('200ms', style({
-        height: 0
-      }))
-    ], { optional: true })
+    style({
+      height: '*',
+      opacity: 1,
+      transform: 'scale(1)'
+    }),
+    animate('200ms ease-in', style({
+      opacity: 0,
+      transform: 'scale(0)'
+    })),
+    animate('200ms', style({
+      height: 0
+    }))
   ])
 ]);

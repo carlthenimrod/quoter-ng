@@ -3,13 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { QuoteService } from '@app/core/quote.service';
 import { Quote, Comment } from '@app/models/quote';
-import { commentPopTrigger } from './animations';
+import { commentAddTrigger, commentRemoveTrigger } from './animations';
 
 @Component({
   selector: 'app-admin-quote',
   templateUrl: './admin-quote.component.html',
   styleUrls: ['./admin-quote.component.scss'],
-  animations: [commentPopTrigger]
+  animations: [commentAddTrigger, commentRemoveTrigger]
 })
 export class AdminQuoteComponent implements OnInit {
 

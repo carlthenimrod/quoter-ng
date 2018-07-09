@@ -27,21 +27,23 @@
           </h3>
       
           <hr>
-
-          <div @commentPop *ngIf="latestAdminComment">
+          
+          <div @commentAdd>
             <comment 
-              [comment]="latestAdminComment" 
-              [quoteId]="quote._id" 
-              [me]="latestAdminComment.admin"
-              [editable]="true"
-              [removable]="true"
-              (delete)="onDelete($event)"
-            >
+                *ngIf="latestAdminComment"
+                @commentRemove
+                [comment]="latestAdminComment" 
+                [quoteId]="quote._id" 
+                [me]="latestAdminComment.admin"
+                [editable]="true"
+                [removable]="true"
+                (delete)="onDelete($event)"
+              >
             </comment>
-          </div>
-  
-          <div @commentPop *ngIf="latestUserComment">
+
             <comment 
+              *ngIf="latestUserComment"
+              @commentRemove
               [comment]="latestUserComment" 
               [quoteId]="quote._id" 
               [me]="latestUserComment.admin"
@@ -58,9 +60,10 @@
   
         <hr>
   
-        <section id="comments" @commentPop>
+        <section id="comments" @commentAdd>
           <comment 
             *ngFor="let comment of comments"
+            @commentRemove
             [comment]="comment"
             [quoteId]="quote._id" 
             [me]="comment.admin"
