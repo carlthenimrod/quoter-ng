@@ -15,6 +15,7 @@ export class CommentComponent implements OnInit {
   @Input() me: boolean;
   @Input() editable: boolean = false;
   @Input() removable: boolean = false;
+  @Output() saved: EventEmitter<Comment> = new EventEmitter();
   @Output() delete: EventEmitter<String> = new EventEmitter();
 
   editing: boolean = false;
@@ -27,6 +28,12 @@ export class CommentComponent implements OnInit {
     $event.preventDefault();
 
     if (this.editable && !this.editing) this.editing = true;
+  }
+
+  onSave(comment: Comment) {
+    this.saved.emit(comment);
+
+    this.editing = false;
   }
 
   onDelete($event) {

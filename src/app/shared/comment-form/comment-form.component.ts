@@ -11,7 +11,7 @@ import { Comment } from '@app/models/quote';
 export class CommentFormComponent {
   @Input() quoteId: string;
   @Input() comment: Comment;
-  @Output() saved: EventEmitter<Comment[]> = new EventEmitter();
+  @Output() saved: EventEmitter<Comment> = new EventEmitter();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
@@ -25,15 +25,15 @@ export class CommentFormComponent {
   onSubmit() {
     //check if we have an _id
     if (this.comment._id) {
-      this.commentService.update(this.quoteId, this.comment).subscribe((comments: Comment[]) => {
-        this.saved.emit(comments);
+      this.commentService.update(this.quoteId, this.comment).subscribe((comment: Comment) => {
+        this.saved.emit(comment);
       },
       e => {
         console.log(e);
       });
     } else { //new comment
-      this.commentService.add(this.quoteId, this.comment).subscribe((comments: Comment[]) => {
-        this.saved.emit(comments);
+      this.commentService.add(this.quoteId, this.comment).subscribe((comment: Comment) => {
+        this.saved.emit(comment);
       },
       e => {
         console.log(e);

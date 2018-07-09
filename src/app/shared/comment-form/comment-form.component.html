@@ -1,3 +1,11 @@
+<div class="row" *ngIf="!comment._id">
+  <div class="col-12">
+    <h5 class="text-center mb-4">New Comment</h5>
+    
+    <hr>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-1"></div>
 
@@ -9,7 +17,7 @@
           id="reply" 
           class="form-control" 
           rows="8" 
-          placeholder="Enter Reply..."
+          placeholder="Enter Comment..."
           required
           minlength="100"
           [(ngModel)]="comment.message"
@@ -22,15 +30,20 @@
       <div class="form-group text-right">
         <button 
           type="submit" 
-          class="btn btn-success btn-lg d-inline-block mr-2"
+          class="btn btn-lg d-inline-block mr-2"
           [disabled]="!f.form.valid"
+          [ngClass]="{
+            'btn-success': comment._id,
+            'btn-primary': !comment._id
+          }"
         >
-          Save
+          {{ (comment._id) ? 'Save' : 'Add New Comment' }}
         </button>
     
         <button 
           type="button" 
           class="btn btn-danger btn-lg d-inline-block"
+          *ngIf="comment._id"
           (click)="onCancel()"
         >
           Cancel

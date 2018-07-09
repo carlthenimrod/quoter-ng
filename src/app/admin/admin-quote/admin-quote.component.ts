@@ -3,13 +3,13 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { QuoteService } from '@app/core/quote.service';
 import { Quote, Comment } from '@app/models/quote';
-import { commentAddTrigger, commentRemoveTrigger } from './animations';
+import { commentStaggerTrigger, commentToggleTrigger } from './animations';
 
 @Component({
   selector: 'app-admin-quote',
   templateUrl: './admin-quote.component.html',
   styleUrls: ['./admin-quote.component.scss'],
-  animations: [commentAddTrigger, commentRemoveTrigger]
+  animations: [commentStaggerTrigger, commentToggleTrigger]
 })
 export class AdminQuoteComponent implements OnInit {
 
@@ -68,9 +68,29 @@ export class AdminQuoteComponent implements OnInit {
     return filteredComments;
   }
 
+  onSave(comment: Comment) {
+    //get index
+    const index = this.quote.comments.findIndex((c: Comment) => c._id === comment._id);
+  
+    //check if edit
+    if (index >= 0) {
+      //remove from array
+      this.quote.comments.splice(index, 1, comment);
+    } else {
+      //create new comment, set admin flag to true
+      this.comment = new Comment('', true);
+
+      //add to array
+      this.quote.comments.unshift(comment);
+    }
+
+    //remove latest comments
+    this.comments = this.removeLatestComments(this.quote.comments);
+  }
+
   onDelete(commentId: String) {
     //get index
-    const index = this.quote.comments.findIndex(comment => comment._id === commentId);
+    const index = this.quote.comments.findIndex((c: Comment) => c._id === commentId);
 
     //remove from array
     this.quote.comments.splice(index, 1);

@@ -48,10 +48,14 @@
   </div>
 </article>
 
-<comment-form 
-  *ngIf="editing"
-  [comment]="comment" 
-  [quoteId]="this.quoteId"
-  (cancel)="onCancel()"
->
-</comment-form>
+<div class="row" *ngIf="editing">
+  <div class="col-12">
+      <comment-form 
+      [comment]="comment" 
+      [quoteId]="this.quoteId"
+      (cancel)="onCancel()"
+      (saved)="onSave($event)"
+    >
+    </comment-form>
+  </div>
+</div>

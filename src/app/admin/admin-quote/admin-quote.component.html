@@ -28,50 +28,65 @@
       
           <hr>
           
-          <div @commentAdd>
+          <div @commentStagger>
             <comment 
                 *ngIf="latestAdminComment"
-                @commentRemove
+                @commentToggle
                 [comment]="latestAdminComment" 
                 [quoteId]="quote._id" 
                 [me]="latestAdminComment.admin"
                 [editable]="true"
                 [removable]="true"
+                (saved)="onSave($event)"
                 (delete)="onDelete($event)"
               >
             </comment>
 
             <comment 
               *ngIf="latestUserComment"
-              @commentRemove
+              @commentToggle
               [comment]="latestUserComment" 
               [quoteId]="quote._id" 
               [me]="latestUserComment.admin"
+              (saved)="onSave($event)"
               (delete)="onDelete($event)"
             >
             </comment>
           </div>
         </div>
     </section><!-- #latest -->
+
+    <section 
+      id="reply" 
+      *ngIf="!latestAdminComment"
+    >
+        <comment-form
+          [comment]="comment"
+          [quoteId]="quote._id"
+          (saved)="onSave($event)"
+        >
+        </comment-form>
+    </section><!-- #reply -->
   
-    <div id="history" class="row justify-content-center pb-4">
+    <section id="history" class="row justify-content-center pb-4">
       <div class="col-12">
         <h3>Chat History</h3>
   
         <hr>
   
-        <section id="comments" @commentAdd>
+        <section id="comments" @commentStagger>
           <comment 
             *ngFor="let comment of comments"
-            @commentRemove
+            @commentToggle
             [comment]="comment"
             [quoteId]="quote._id" 
             [me]="comment.admin"
+            (saved)="onSave($event)"
             (delete)="onDelete($event)"
           >
           </comment>
         </section>
       </div>
-    </div><!-- #history -->
+    </section><!-- #history -->
   </div>
 </section>
