@@ -2,26 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { QuoteService } from '@app/core/quote.service';
-import { CommentService } from '@app/core/comment.service';
 import { Quote, Comment } from '@app/models/quote';
+import { commentPopTrigger } from './animations';
 
 @Component({
   selector: 'app-admin-quote',
   templateUrl: './admin-quote.component.html',
-  styleUrls: ['./admin-quote.component.scss']
+  styleUrls: ['./admin-quote.component.scss'],
+  animations: [commentPopTrigger]
 })
 export class AdminQuoteComponent implements OnInit {
 
   quote: Quote;
+  comments: Comment[];
   comment: Comment;
   latestUserComment: Comment;
   latestAdminComment: Comment;
-  latestComment: string;
 
   constructor(
     private route: ActivatedRoute,
-    private quoteService: QuoteService,
-    private commentService: CommentService
+    private quoteService: QuoteService
   ) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class AdminQuoteComponent implements OnInit {
       this.quoteService.get(params['id']).subscribe((quote: Quote) => {
 
         //remove latest comments
-        quote.comments = this.removeLatestComments(quote.comments);
+        this.comments = this.removeLatestComments(quote.comments);
 
         //store quote
         this.quote = quote;
@@ -61,32 +61,21 @@ export class AdminQuoteComponent implements OnInit {
       } else return comment;
     });
 
-    //find who made the latest comment
-    if (this.latestAdminComment && this.latestUserComment) {
-      const adminCommentDate = new Date(this.latestAdminComment.updatedAt);
-      const userCommentDate = new Date(this.latestUserComment.updatedAt);
-
-      this.latestComment = (adminCommentDate > userCommentDate) ? 'admin' : 'user';
-    }
-    else if (this.latestAdminComment) this.latestComment = 'admin';
-    else if (this.latestUserComment) this.latestComment = 'user';
+    //remove old values if nothing found
+    if (!foundUserComment) this.latestUserComment = undefined;
+    if (!foundAdminComment) this.latestAdminComment = undefined;
 
     return filteredComments;
   }
 
-  onSubmit() {
+  onDelete(commentId: String) {
+    //get index
+    const index = this.quote.comments.findIndex(comment => comment._id === commentId);
 
-    //add comment
-    this.commentService.add(this.quote._id, this.comment).subscribe((quote: Quote) => {
+    //remove from array
+    this.quote.comments.splice(index, 1);
 
-      //remove latest comments
-      quote.comments = this.removeLatestComments(quote.comments);
-
-      //store quote
-      this.quote = quote;
-    },
-    e => {
-      console.log(e);
-    });
+    //remove latest comments
+    this.comments = this.removeLatestComments(this.quote.comments);
   }
 }

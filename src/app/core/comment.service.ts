@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 
-import { Quote, Comment } from '@app/models/quote';
+import { Comment } from '@app/models/quote';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,21 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  add(id: String, comment: Comment): Observable<any>{
+  add(quoteId: String, comment: Comment): Observable<any>{
+		const url = this.api + `quotes/${quoteId}/comments`;
 
-		let api = this.api + `quotes/${id}/comments`;
+		return this.http.post(url, comment);	
+  }
 
-		return this.http.post(api, comment);	
+  update(quoteId: String, comment: Comment): Observable<any>{
+    const url = this.api + `quotes/${quoteId}/comments/${comment._id}`;
+
+    return this.http.put(url, comment);
+  }
+
+  remove(quoteId: String, commentId: String): Observable<any>{
+    const url = this.api + `quotes/${quoteId}/comments/${commentId}`;
+
+    return this.http.delete(url);
   }
 }

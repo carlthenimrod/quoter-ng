@@ -20,7 +20,7 @@
   </header>
 
   <div class="container">
-    <div id="latest" class="row justify-content-center py-4">
+    <section id="latest" class="row justify-content-center py-4">
         <div class="col-12">
           <h3 *ngIf="latestAdminComment || latestUserComment">
             Latest Messages
@@ -28,73 +28,47 @@
       
           <hr>
 
-          <div *ngIf="latestComment === 'user'">
-            <comment 
-              [comment]="latestUserComment" 
-              [me]="latestUserComment.admin"
-            >
-            </comment>
-          </div>
-
-          <div *ngIf="latestComment === 'admin'">
+          <div @commentPop *ngIf="latestAdminComment">
             <comment 
               [comment]="latestAdminComment" 
+              [quoteId]="quote._id" 
               [me]="latestAdminComment.admin"
               [editable]="true"
               [removable]="true"
-            >
-            </comment>
-
-            <comment 
-              [comment]="latestUserComment" 
-              [me]="latestUserComment.admin"
+              (delete)="onDelete($event)"
             >
             </comment>
           </div>
   
-          <form *ngIf="!latestAdminComment" #f="ngForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <textarea 
-                name="reply" 
-                id="reply" 
-                class="form-control" 
-                rows="8" 
-                placeholder="Enter Reply..."
-                required
-                minlength="100"
-                [(ngModel)]="comment.message"
-              ></textarea>
-              
-              <div class="invalid-feedback">
-                Reply must be at least 100 characters.
-              </div>
-            </div>
-        
-            <button 
-              type="submit" 
-              class="btn btn-primary btn-lg float-right"
-              [disabled]="!f.form.valid"
+          <div @commentPop *ngIf="latestUserComment">
+            <comment 
+              [comment]="latestUserComment" 
+              [quoteId]="quote._id" 
+              [me]="latestUserComment.admin"
+              (delete)="onDelete($event)"
             >
-            Submit Reply</button>
-          </form>
+            </comment>
+          </div>
         </div>
-    </div>
+    </section><!-- #latest -->
   
-    <div class="row justify-content-center pb-4">
+    <div id="history" class="row justify-content-center pb-4">
       <div class="col-12">
         <h3>Chat History</h3>
   
         <hr>
   
-        <div *ngFor="let comment of quote.comments">
+        <section id="comments" @commentPop>
           <comment 
-            [comment]="comment" 
-            [me]="comment.admin" 
-            [size]="'sm'"
+            *ngFor="let comment of comments"
+            [comment]="comment"
+            [quoteId]="quote._id" 
+            [me]="comment.admin"
+            (delete)="onDelete($event)"
           >
           </comment>
-        </div>
+        </section>
       </div>
-    </div>
+    </div><!-- #history -->
   </div>
 </section>

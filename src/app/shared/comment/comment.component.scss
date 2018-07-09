@@ -1,11 +1,27 @@
-article {
-  a {
-    display: none;
-    height: 20px;
-    width: 20px;
-  }
+:host {
+  display: block;
 
-  &:hover a{
-    display: block;
+  article {
+    a {
+      display: none;
+      height: 20px;
+      width: 20px;
+    }
+  
+    &:hover a{
+      display: block;
+    }
+  }
+}
+
+:host-context(#history) {
+  blockquote {
+    font-size: 1rem;
+  }
+}
+
+:host-context(#latest) {
+  p {
+    font-size: 1.2rem;
   }
 }

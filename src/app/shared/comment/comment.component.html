@@ -1,21 +1,19 @@
-<div class="row">
+<div class="row" *ngIf="!editing">
   <div class="col-12">
     <p 
-      class="text-center"
-      [style.fontSize]="size"
+      class="text-center mb-0"
     >
-      {{ comment.updatedAt | date:'short' }}
+      {{ comment.updatedAt | date: 'short' }}
     </p>
   </div>
 </div>
 
-<article class="row align-items-center">
+<article class="row align-items-center" *ngIf="!editing">
   <div class="col-1"></div>
 
   <div class="col-10">
     <blockquote 
       class="blockquote p-4 my-4 rounded shadow-sm" 
-      [style.fontSize]="size"
       [ngClass]="{
         'text-white bg-primary': me,
         'text-dark bg-light': !me
@@ -26,12 +24,34 @@
   </div>
 
   <div class="col-1">
-      <a href="#" class="my-4" title="Remove" alt="Remove" *ngIf="removable">
+      <a 
+        *ngIf="removable" 
+        (click)="onDelete($event)"
+        href 
+        class="my-4" 
+        title="Remove" 
+        alt="Remove"
+      >
         <i class="far fa-trash-alt"></i>
       </a>
 
-      <a href="#" class="my-4" title="Edit" alt="Edit" *ngIf="editable">
+      <a 
+        *ngIf="editable" 
+        (click)="onEdit($event)"
+        href
+        class="my-4" 
+        title="Edit" 
+        alt="Edit"
+      >
         <i class="fas fa-wrench"></i>
       </a>
   </div>
 </article>
+
+<comment-form 
+  *ngIf="editing"
+  [comment]="comment" 
+  [quoteId]="this.quoteId"
+  (cancel)="onCancel()"
+>
+</comment-form>

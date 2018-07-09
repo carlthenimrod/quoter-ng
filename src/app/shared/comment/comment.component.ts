@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Comment } from '@app/models/quote';
+import { CommentService } from '@app/core/comment.service';
 
 @Component({
   selector: 'comment',
@@ -10,23 +11,33 @@ import { Comment } from '@app/models/quote';
 export class CommentComponent implements OnInit {
 
   @Input() comment: Comment;
+  @Input() quoteId: String;
   @Input() me: boolean;
-  @Input() size: string;
   @Input() editable: boolean = false;
   @Input() removable: boolean = false;
+  @Output() delete: EventEmitter<String> = new EventEmitter();
 
-  ngOnInit() {
-    switch (this.size) {
-      case 'sm':
-        this.size = '1rem';
-        break;
+  editing: boolean = false;
 
-      case 'lg':
-        this.size = '1.4rem';
-        break;
+  constructor(private commentService: CommentService) { }
 
-      default:
-        this.size = '1.2rem'
-    }
+  ngOnInit() { }
+
+  onEdit($event) {
+    $event.preventDefault();
+
+    if (this.editable && !this.editing) this.editing = true;
+  }
+
+  onDelete($event) {
+    $event.preventDefault();
+
+    this.commentService.remove(this.quoteId, this.comment._id).subscribe(success => {
+      this.delete.emit(this.comment._id);
+    }, e => console.log(e));
+  }
+
+  onCancel() {
+    this.editing = false;
   }
 }
