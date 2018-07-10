@@ -29,6 +29,18 @@ export const commentToggleTrigger = trigger('commentToggle', [
       height: '*'
     })),
     animate('200ms ease-out')
+  ]),
+  transition(':leave', [
+    style({
+      height: '*',
+      opacity: 1,
+      transform: 'scale(1)'
+    }),
+    animate('200ms ease-out', style({
+      height: 0,
+      opacity: 0,
+      transform: 'scale(0)'
+    }))
   ])
 ]);
 
