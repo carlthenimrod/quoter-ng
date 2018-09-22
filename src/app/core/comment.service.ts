@@ -15,9 +15,9 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
   add(quoteId: String, comment: Comment): Observable<any>{
-		const url = this.api + `quotes/${quoteId}/comments`;
+    const url = this.api + `quotes/${quoteId}/comments`;
 
-		return this.http.post(url, comment);	
+    return this.http.post(url, comment);
   }
 
   update(quoteId: String, comment: Comment): Observable<any>{

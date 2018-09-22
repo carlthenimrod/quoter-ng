@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './home/home.component';
 import { QuoterComponent } from '@app/core/quoter/quoter.component';
+import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   exports: [
@@ -17,7 +20,9 @@ import { QuoterComponent } from '@app/core/quoter/quoter.component';
   ],
   declarations: [
     HomeComponent,
-    QuoterComponent
+    QuoterComponent,
+    HeaderComponent,
+    LoginComponent
   ]
 })
 export class CoreModule { }

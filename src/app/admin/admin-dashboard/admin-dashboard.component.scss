@@ -1,0 +1,13 @@
+table {
+  table-layout: fixed;
+
+  tr {
+    &:hover {
+      cursor: pointer;
+    }
+
+    td {
+      word-wrap: break-word;
+    }
+  }
+}

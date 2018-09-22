@@ -14,25 +14,25 @@ export class QuoteService {
 
   constructor(private http: HttpClient) { }
 
-  all(): Observable<any>{
+  all(): Observable<any> {
     const url = this.api + 'quotes';
 
     return this.http.get(url);
   }
 
-  get(id: string): Observable<any>{
+  get(id: string): Observable<any> {
     const url = this.api + `quotes/${id}`;
 
     return this.http.get(url);
   }
 
-  add(quote: Quote): Observable<any>{
-		const url = this.api + 'quotes';
+  add(quote: Quote): Observable<any> {
+    const url = this.api + 'quotes';
 
-		return this.http.post(url, quote);	
+    return this.http.post(url, quote);
   }
 
-  update(quote: Quote): Observable<any>{
+  update(quote: Quote): Observable<any> {
     const url = this.api + `quotes/${quote._id}`;
 
     return this.http.put(url, quote);

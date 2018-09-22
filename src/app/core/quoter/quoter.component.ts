@@ -9,7 +9,6 @@ import { QuoteService } from '@app/core/quote.service';
   styleUrls: ['./quoter.component.scss']
 })
 export class QuoterComponent implements OnInit {
-
   quote: Quote;
 
   constructor(private quoteService: QuoteService) { }
@@ -17,8 +16,8 @@ export class QuoterComponent implements OnInit {
   ngOnInit() {
     this.quote = new Quote('', '');
   }
-  
-  onSubmit(){
+
+  onSubmit() {
     this.quoteService.add(this.quote).subscribe((quote: Quote) => {
       console.log(quote);
     }, error => {

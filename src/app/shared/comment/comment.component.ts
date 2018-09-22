@@ -13,12 +13,12 @@ export class CommentComponent implements OnInit {
   @Input() comment: Comment;
   @Input() quoteId: String;
   @Input() me: boolean;
-  @Input() editable: boolean = false;
-  @Input() removable: boolean = false;
+  @Input() editable = false;
+  @Input() removable = false;
   @Output() saved: EventEmitter<Comment> = new EventEmitter();
   @Output() delete: EventEmitter<String> = new EventEmitter();
 
-  editing: boolean = false;
+  editing = false;
 
   constructor(private commentService: CommentService) { }
 
@@ -27,7 +27,9 @@ export class CommentComponent implements OnInit {
   onEdit($event) {
     $event.preventDefault();
 
-    if (this.editable && !this.editing) this.editing = true;
+    if (this.editable && !this.editing) {
+      this.editing = true;
+    }
   }
 
   onSave(comment: Comment) {
