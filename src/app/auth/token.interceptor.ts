@@ -44,6 +44,8 @@ export class TokenInterceptor implements HttpInterceptor {
           } else {
             return this.logout();
           }
+        } else {
+          return throwError(error);
         }
       })
     );

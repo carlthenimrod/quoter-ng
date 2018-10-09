@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '@app/auth/auth.service';
 
@@ -14,9 +15,12 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
+  loginFailed = false;
+
   constructor(
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -27,8 +31,8 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
 
     this.auth.login(email, password).subscribe(
-      success => console.log(success),
-      error => console.log(error)
+      success => this.router.navigateByUrl('/admin'),
+      error => this.loginFailed = true
     );
   }
 }
