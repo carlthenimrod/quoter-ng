@@ -5,19 +5,29 @@
 <ul class="nav nav-pills flex-column">
   <li class="nav-item">
     <a class="nav-link active" [routerLink]="['/admin']">
-      <i class="fas fa-quote-left mr-2"></i> Quotes
+      <i class="fas fa-quote-left mr-2"></i>
+
+      <span class="mr-2">Quotes</span>
+
+      <span *ngIf="pending" class="badge badge-pill badge-light">
+        {{ pending }}
+      </span>
     </a>
   </li>
 
   <li class="nav-item">
     <a class="nav-link disabled">
-      <i class="far fa-file-alt mr-2"></i> Invoices
+      <i class="far fa-file-alt mr-2"></i>
+
+      <span class="mr-2">Invoices</span>
     </a>
   </li>
 
   <li class="nav-item">
     <a class="nav-link disabled">
-      <i class="fas fa-envelope mr-2"></i> Emails
+      <i class="fas fa-envelope mr-2"></i>
+
+      <span class="mr-2">Emails</span>
     </a>
   </li>
 </ul>

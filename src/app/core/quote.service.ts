@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '@env/environment';
 
 import { Quote } from '@app/models/quote';
@@ -11,13 +11,22 @@ import { Quote } from '@app/models/quote';
 export class QuoteService {
 
   api: string = environment.api;
+  pending: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.updatePending();
+  }
 
-  all(): Observable<any> {
+  all(params: object = {}): Observable<any> {
     const url = this.api + 'quotes';
 
-    return this.http.get(url);
+    return this.http.get(url, { params: {...params} });
+  }
+
+  updatePending(): void {
+    this.all({status: ['new', 'pending']}).subscribe((quotes: Quote[]) => {
+      this.pending.next(quotes.length);
+    });
   }
 
   get(id: string): Observable<any> {

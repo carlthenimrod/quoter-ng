@@ -4,7 +4,7 @@ import { QuoteService } from '@app/core/quote.service';
 import { Quote } from '@app/models/quote';
 
 @Component({
-  selector: 'admin-dashboard',
+  selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })

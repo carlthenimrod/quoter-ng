@@ -52,6 +52,10 @@ export class AuthService {
       );
   }
 
+  loggedIn(): boolean {
+    return (localStorage.getItem('access_token')) ? true : false;
+  }
+
   login(email: string, password: string): Observable<any> {
     return this.http.post(this.api + 'users/login', {
       email: email,
@@ -75,6 +79,6 @@ export class AuthService {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('client');
 
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('login', { skipLocationChange: true });
   }
 }

@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { CommentService } from '@app/core/comment.service';
 import { Comment } from '@app/models/quote';
+import { QuoteService } from '@app/core/quote.service';
 
 @Component({
-  selector: 'comment-form',
+  selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.scss']
 })
@@ -15,7 +16,8 @@ export class CommentFormComponent {
   @Output() cancel: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    private commentService: CommentService
+    private commentService: CommentService,
+    private quoteService: QuoteService
   ) { }
 
   onCancel() {
@@ -23,17 +25,19 @@ export class CommentFormComponent {
   }
 
   onSubmit() {
-    //check if we have an _id
+    // check if we have an _id
     if (this.comment._id) {
       this.commentService.update(this.quoteId, this.comment).subscribe((comment: Comment) => {
         this.saved.emit(comment);
+        this.quoteService.updatePending();
       },
       e => {
         console.log(e);
       });
-    } else { //new comment
+    } else { // new comment
       this.commentService.add(this.quoteId, this.comment).subscribe((comment: Comment) => {
         this.saved.emit(comment);
+        this.quoteService.updatePending();
       },
       e => {
         console.log(e);

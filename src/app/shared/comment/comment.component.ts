@@ -2,9 +2,10 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Comment } from '@app/models/quote';
 import { CommentService } from '@app/core/comment.service';
+import { QuoteService } from '@app/core/quote.service';
 
 @Component({
-  selector: 'comment',
+  selector: 'app-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
@@ -20,7 +21,10 @@ export class CommentComponent implements OnInit {
 
   editing = false;
 
-  constructor(private commentService: CommentService) { }
+  constructor(
+    private commentService: CommentService,
+    private quoteService: QuoteService
+  ) { }
 
   ngOnInit() { }
 
@@ -43,6 +47,7 @@ export class CommentComponent implements OnInit {
 
     this.commentService.remove(this.quoteId, this.comment._id).subscribe(success => {
       this.delete.emit(this.comment._id);
+      this.quoteService.updatePending();
     }, e => console.log(e));
   }
 

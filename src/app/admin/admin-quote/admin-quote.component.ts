@@ -28,13 +28,13 @@ export class AdminQuoteComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.quoteService.get(params['id']).subscribe((quote: Quote) => {
 
-        //remove latest comments
+        // remove latest comments
         this.comments = this.removeLatestComments(quote.comments);
 
-        //store quote
+        // store quote
         this.quote = quote;
 
-        //create new comment, set admin flag to true
+        // create new comment, set admin flag to true
         this.comment = new Comment('', true);
       });
     },
@@ -45,57 +45,64 @@ export class AdminQuoteComponent implements OnInit {
 
   removeLatestComments(comments: Comment[]): Comment[] {
 
-    let foundUserComment: boolean = false;
-    let foundAdminComment: boolean = false;
+    let foundUserComment = false;
+    let foundAdminComment = false;
     let filteredComments: Comment[];
 
     filteredComments = comments.filter(comment => {
 
-      //only get admin comment if no user comment is present
+      // only get admin comment if no user comment is present
       if (comment.admin && !foundAdminComment && !foundUserComment) {
         this.latestAdminComment = comment;
         foundAdminComment = true;
       } else if (!foundUserComment && !comment.admin) {
         this.latestUserComment = comment;
         foundUserComment = true;
-      } else return comment;
+      } else {
+        return comment;
+      }
     });
 
-    //remove old values if nothing found
-    if (!foundUserComment) this.latestUserComment = undefined;
-    if (!foundAdminComment) this.latestAdminComment = undefined;
+    // remove old values if nothing found
+    if (!foundUserComment) {
+      this.latestUserComment = undefined;
+    }
+
+    if (!foundAdminComment) {
+      this.latestAdminComment = undefined;
+    }
 
     return filteredComments;
   }
 
   onSave(comment: Comment) {
-    //get index
+    // get index
     const index = this.quote.comments.findIndex((c: Comment) => c._id === comment._id);
-  
-    //check if edit
+
+    // check if edit
     if (index >= 0) {
-      //remove from array
+      // remove from array
       this.quote.comments.splice(index, 1, comment);
     } else {
-      //create new comment, set admin flag to true
+      // create new comment, set admin flag to true
       this.comment = new Comment('', true);
 
-      //add to array
+      // add to array
       this.quote.comments.unshift(comment);
     }
 
-    //remove latest comments
+    // remove latest comments
     this.comments = this.removeLatestComments(this.quote.comments);
   }
 
   onDelete(commentId: String) {
-    //get index
+    // get index
     const index = this.quote.comments.findIndex((c: Comment) => c._id === commentId);
 
-    //remove from array
+    // remove from array
     this.quote.comments.splice(index, 1);
 
-    //remove latest comments
+    // remove latest comments
     this.comments = this.removeLatestComments(this.quote.comments);
   }
 }

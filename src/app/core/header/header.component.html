@@ -1,7 +1,19 @@
 <div class="container">
   <div class="row justify-content-end py-2">
-    <button class="btn btn-primary" routerLink="login">
+    <button
+      *ngIf="!loggedIn"
+      class="btn btn-primary"
+      routerLink="login"
+    >
       Login <i class="fas fa-sign-in-alt"></i>
+    </button>
+
+    <button
+      *ngIf="loggedIn"
+      class="btn btn-primary"
+      routerLink="admin"
+    >
+      Admin <i class="fas fa-user-lock"></i>
     </button>
   </div>
 </div>

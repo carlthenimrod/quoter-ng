@@ -15,9 +15,9 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     SharedModule
   ],
   declarations: [
-    AdminComponent, 
-    AdminQuoteComponent, 
-    AdminSidebarComponent, 
+    AdminComponent,
+    AdminQuoteComponent,
+    AdminSidebarComponent,
     AdminDashboardComponent
   ]
 })
